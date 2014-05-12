@@ -21,6 +21,37 @@ namespace WinFrogger
         Direction direction;
         bool walkable;
 
+        // Properties
+        public float PosX
+        {
+            get { return posX; }
+            protected set { posX = value; }
+        }
+
+        public float PosY
+        {
+            get { return posY; }
+            protected set { PosY = value; }
+        }
+
+        public int Width
+        {
+            get { return width; }
+            protected set { width = value; }
+        }
+
+        public int Height
+        {
+            get { return height; }
+            protected set { height = value; }
+        }
+
+        public bool Walkable
+        {
+            get { return walkable; }
+            protected set { walkable = value; }
+        }
+
 
         // Konstruktor
         public MovingObject(Image ImgTex, Direction direct, float pX = 0, float pY = 0, float oSpeed = 1.0f, int oWidth = 16, int oHeight = 16, bool wAble = true)
@@ -35,7 +66,7 @@ namespace WinFrogger
             walkable = wAble;
         }
 
-        public void Update()
+        public virtual void Update()
         {
             switch (direction)
             {
