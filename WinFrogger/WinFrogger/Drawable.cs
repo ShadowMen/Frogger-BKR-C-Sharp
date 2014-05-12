@@ -8,7 +8,7 @@ namespace WinFrogger
 {
     class Drawable
     {
-        protected virtual void Draw(Graphics gfx)
+        public virtual void Draw(Graphics gfx)
         {
         }
     }

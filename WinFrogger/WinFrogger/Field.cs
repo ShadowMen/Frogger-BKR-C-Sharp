@@ -38,7 +38,7 @@ namespace WinFrogger
         {
         }
 
-        protected override void Draw(System.Drawing.Graphics gfx)
+        public override void Draw(System.Drawing.Graphics gfx)
         {
             base.Draw(gfx);
         }
