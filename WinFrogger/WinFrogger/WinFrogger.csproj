@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="Field.cs" />
     <Compile Include="Finish.cs" />
+    <Compile Include="Frog.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="MainForm.cs">
