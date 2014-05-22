@@ -75,10 +75,6 @@ namespace WinFrogger
         }
 
         // Grafik Funktionen
-        public void Resize(int width, int height)
-        {
-        }
-
         public void Draw(Graphics gfx)
         {
             for (int i = 0; i < drawlist.Count; i++)
