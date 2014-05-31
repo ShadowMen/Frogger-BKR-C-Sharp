@@ -11,9 +11,7 @@ namespace WinFrogger
         public DrawPanel()
         {
             // Setze Styles für DoubleBuffering
-            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            this.DoubleBuffered = true;
             UpdateStyles();
         }
     }

@@ -100,9 +100,13 @@
             this.menuPlayerName.Size = new System.Drawing.Size(100, 21);
             this.menuPlayerName.Text = "Player";
             // 
+            // updateTimer
+            // 
+            this.updateTimer.Interval = 33;
+            this.updateTimer.Tick += new System.EventHandler(this.updateTimer_Tick);
+            // 
             // drawTimer
             // 
-            this.drawTimer.Enabled = true;
             this.drawTimer.Interval = 333;
             this.drawTimer.Tick += new System.EventHandler(this.drawTimer_Tick);
             // 
@@ -127,6 +131,7 @@
             this.MinimumSize = new System.Drawing.Size(614, 500);
             this.Name = "MainForm";
             this.Text = "Frogger - von Nils";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.ResumeLayout(false);
