@@ -12,9 +12,10 @@ namespace WinFrogger
 
 
         // Konstruktor
-        public Car(Image ImgTex, Direction direct, float pX = 0, float pY = 0, float oSpeed = 1.0f, int oWidth = 16, int oHeight = 16, bool wAble = true)
+        public Car(Image ImgTex, Direction direct, int pX = 0, int pY = 0, int oSpeed = 1, int oWidth = 16, int oHeight = 16, bool wAble = true, bool flipedImage = false)
             : base(ImgTex, direct, pX, pY, oSpeed, oWidth, oHeight, wAble)
         {
+            if (flipedImage) base.Texture.RotateFlip(RotateFlipType.Rotate180FlipNone);
         }
 
         public override void Update()

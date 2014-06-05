@@ -12,7 +12,7 @@ namespace WinFrogger
 
 
         // Konstruktor
-        public Turtle(Image ImgTex, Direction direct, float pX = 0, float pY = 0, float oSpeed = 1.0f, int oWidth = 16, int oHeight = 16, bool wAble = true)
+        public Turtle(Image ImgTex, Direction direct, int pX = 0, int pY = 0, int oSpeed = 1, int oWidth = 16, int oHeight = 16, bool wAble = true)
             : base(ImgTex, direct, pX, pY, oSpeed, oWidth, oHeight, wAble)
         {
         }

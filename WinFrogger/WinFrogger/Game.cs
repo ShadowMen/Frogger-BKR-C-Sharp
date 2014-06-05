@@ -18,15 +18,19 @@ namespace WinFrogger
         // Variabeln
         DifficultyLevel difficultyLvl;
         bool isGameRunning;
+        List<Drawable> drawlist = new List<Drawable>();
 
             // Frog
         bool frogMoving = false;
         Point newFrogPos;
+        Frog frog;
 
-        List<Drawable> drawlist = new List<Drawable>();
+            // Field
         Field field;
 
-        Frog frog;
+            // Car
+        List<Car> cars = new List<Car>();
+        
 
         // Konstruktor
         public Game()
@@ -38,6 +42,8 @@ namespace WinFrogger
 
             frog = new Frog(Image.FromFile("data/textures/frog.png"), 288, 384, FrogDirection.Up);
             drawlist.Add(frog);
+
+            for (int i = 0; i < 12; i++) this.AddRandomCar();
         }
 
         // Properties
@@ -111,6 +117,12 @@ namespace WinFrogger
         public void Update()
         {
             this.MoveFrog();
+
+            for (int i = 0; i < cars.Count; i++)
+            {
+                cars[i].Update();
+                this.CheckCars(cars[i]);
+            }
         }
 
         private void MoveFrog()
@@ -119,7 +131,7 @@ namespace WinFrogger
             {
                 if (!frog.Position.Equals(newFrogPos))
                 {
-                    frog.Move(frog.Direction, 2);
+                    frog.Move(frog.Direction, 8);
                     frog.Status = FrogStatus.Jump;
                 }
                 else
@@ -128,6 +140,44 @@ namespace WinFrogger
                     frog.Status = FrogStatus.Alive;
                 }
             }
+        }
+
+        private void CheckCars(Car car)
+        {
+            if (car.Position.X <= -32 || car.Position.X >= 32 * field.FieldWidth)
+            {
+                cars.Remove(car);
+                this.AddRandomCar();
+            }
+        }
+
+        private void AddRandomCar()
+        {
+            Random rnd = new Random(DateTime.Now.Millisecond);
+
+            switch (rnd.Next(0, 5))
+            {
+                case 0:
+                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608, 224, rnd.Next(2, 16), 32, 32, false, true));
+                    break;
+                case 1:
+                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32, 256, rnd.Next(2, 16), 32, 32, false));
+                    break;
+                case 2:
+                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608, 288, rnd.Next(2, 16), 32, 32, false, true));
+                    break;
+                case 3:
+                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32, 320, rnd.Next(2, 16), 32, 32, false));
+                    break;
+                case 4:
+                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608, 352, rnd.Next(2, 16), 32, 32, false, true));
+                    break;
+                case 5:
+                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32, 384, rnd.Next(2, 16), 32, 32, false));
+                    break;
+            }
+
+            drawlist.Add(cars[cars.Count - 1]);
         }
 
         // Grafik Funktionen

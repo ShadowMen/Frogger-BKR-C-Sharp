@@ -16,22 +16,17 @@ namespace WinFrogger
     {
         // Variabeln
         Image texture;
-        float posX, posY, speed;
+        Point position;
+        int speed;
         int width, height;
         Direction direction;
         bool walkable;
 
         // Properties
-        public float PosX
+        public Point Position
         {
-            get { return posX; }
-            protected set { posX = value; }
-        }
-
-        public float PosY
-        {
-            get { return posY; }
-            protected set { PosY = value; }
+            get { return position; }
+            protected set { position = value; }
         }
 
         public int Width
@@ -52,14 +47,19 @@ namespace WinFrogger
             protected set { walkable = value; }
         }
 
+        protected Image Texture
+        {
+            get { return texture; }
+            set { texture = value; }
+        }
+
 
         // Konstruktor
-        public MovingObject(Image ImgTex, Direction direct, float pX = 0, float pY = 0, float oSpeed = 1.0f, int oWidth = 16, int oHeight = 16, bool wAble = true)
+        public MovingObject(Image ImgTex, Direction direct, int pX = 0, int pY = 0, int oSpeed = 1, int oWidth = 16, int oHeight = 16, bool wAble = true)
         {
             texture = ImgTex;
             direction = direct;
-            posX = pX;
-            posY = pY;
+            position = new Point(pX, pY);
             speed = oSpeed;
             width = oWidth;
             height = oHeight;
@@ -71,17 +71,17 @@ namespace WinFrogger
             switch (direction)
             {
                 case Direction.Left:
-                    posX -= speed;
+                    position.X -= speed;
                     break;
                 case Direction.Right:
-                    posX += speed;
+                    position.X += speed;
                     break;
             }
         }
 
         public override void Draw(Graphics gfx)
         {
-            gfx.DrawImage(texture, posX, posY, width, height);
+            gfx.DrawImage(texture, position.X, position.Y, width, height);
         }
     }
 }
