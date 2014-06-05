@@ -107,7 +107,7 @@
             // 
             // drawTimer
             // 
-            this.drawTimer.Interval = 333;
+            this.drawTimer.Interval = 50;
             this.drawTimer.Tick += new System.EventHandler(this.drawTimer_Tick);
             // 
             // drawPanel
