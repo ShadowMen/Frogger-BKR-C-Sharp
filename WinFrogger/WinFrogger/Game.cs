@@ -39,6 +39,7 @@ namespace WinFrogger
 
             field = new Field();
             drawlist.Add(field);
+            this.GenerateField();
 
             frog = new Frog(Image.FromFile("data/textures/frog.png"), 288, 384, FrogDirection.Up);
             drawlist.Add(frog);
@@ -148,6 +149,83 @@ namespace WinFrogger
             {
                 cars.Remove(car);
                 this.AddRandomCar();
+            }
+        }
+
+        private void GenerateField()
+        {
+            // Create Map
+            Random rnd = new Random(DateTime.Now.Millisecond);
+
+            for (int y = 0; y < field.FieldHeight; y++)
+            {
+                for (int x = 0; x < field.FieldWidth; x++)
+                {
+                    // Grass
+                    if (y == 0)
+                    {
+                        field.FType[y, x] = FieldType.Deathzone;
+
+                        if (x % 4 == 0) field.FStyle[y, x] = FieldStyle.Grass_Down_Right;
+                        else if (x % 4 == 1) field.FStyle[y, x] = FieldStyle.Grass_Left_Right_Top;
+                        else if (x % 4 == 2) field.FStyle[y, x] = FieldStyle.Grass_Left_Down;
+                        else field.FStyle[y, x] = FieldStyle.Grass;
+                    }
+                    // Grass und Ziel
+                    else if (y == 1)
+                    {
+                        field.FType[y, x] = FieldType.Deathzone;
+
+                        if (x % 4 == 0) field.FStyle[y, x] = FieldStyle.Grass_Left_Up;
+                        else if (x % 4 == 1)
+                        {
+                            field.FStyle[y, x] = FieldStyle.Stone;
+                            field.FType[y, x] = FieldType.Goal;
+                        }
+                        else if (x % 4 == 2) field.FStyle[y, x] = FieldStyle.Grass_Up_Right;
+                        else field.FStyle[y, x] = FieldStyle.Grass_Left_Right_Bottom;
+                    }
+                    // Wasser
+                    else if (y >= 2 && y <= 5)
+                    {
+                        field.FStyle[y, x] = FieldStyle.Water;
+                        field.FType[y, x] = FieldType.Deathzone;
+                    }
+                    // Gehweg oben
+                    else if (y == 6)
+                    {
+                        field.FType[y, x] = FieldType.Savezone;
+
+                        if (rnd.Next() % 2 == 0) field.FStyle[y, x] = FieldStyle.Sidewalk_Up_1;
+                        else field.FStyle[y, x] = FieldStyle.Sidewalk_Up_2;
+                    }
+                    // Straße oben
+                    else if (y == 7)
+                    {
+                        field.FStyle[y, x] = FieldStyle.Street_Line_Down;
+                        field.FType[y, x] = FieldType.Walkable;
+                    }
+                    // Straße mitte
+                    else if (y >= 8 && y <= 10)
+                    {
+                        field.FStyle[y, x] = FieldStyle.Street_Line_Double;
+                        field.FType[y, x] = FieldType.Walkable;
+                    }
+                    // Straße unten
+                    else if (y == 11)
+                    {
+                        field.FStyle[y, x] = FieldStyle.Street_Line_Up;
+                        field.FType[y, x] = FieldType.Walkable;
+                    }
+                    // Gehweg unten
+                    else if (y == 12)
+                    {
+                        field.FType[y, x] = FieldType.Walkable;
+
+                        if (rnd.Next() % 2 == 0) field.FStyle[y, x] = FieldStyle.Sidewalk_Down_1;
+                        else field.FStyle[y, x] = FieldStyle.Sidewalk_Down_2;
+                    }
+                }
             }
         }
 
