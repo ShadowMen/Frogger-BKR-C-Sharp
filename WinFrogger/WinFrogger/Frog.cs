@@ -27,7 +27,7 @@ namespace WinFrogger
         Image texture;
         Point position;
         Rectangle textRect;
-        FrogDirection direction;
+        FrogDirection direction = FrogDirection.Down;
         FrogStatus status;
 
         // Properties
@@ -71,9 +71,8 @@ namespace WinFrogger
             texture = imgTexture;
             position = new Point(pX, pY);
             textRect = new Rectangle(0, 0, 32, 32);
-            direction = fDirection;
 
-            TurnFrog(direction);
+            TurnFrog(fDirection);
         }
 
         public void Move(FrogDirection direct, int width)
@@ -99,7 +98,7 @@ namespace WinFrogger
 
         public void TurnFrog(FrogDirection direct)
         {
-            if (direct != direction) direction = direct;
+            if (direction != direct) direction = direct;
             else return;
 
             switch (direct)
