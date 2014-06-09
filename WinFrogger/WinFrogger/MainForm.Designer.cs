@@ -37,7 +37,6 @@
             this.menuPauseResume = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPlayerName = new System.Windows.Forms.ToolStripTextBox();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
-            this.drawTimer = new System.Windows.Forms.Timer(this.components);
             this.drawPanel = new System.Windows.Forms.Panel();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -105,11 +104,6 @@
             this.updateTimer.Interval = 33;
             this.updateTimer.Tick += new System.EventHandler(this.updateTimer_Tick);
             // 
-            // drawTimer
-            // 
-            this.drawTimer.Interval = 50;
-            this.drawTimer.Tick += new System.EventHandler(this.drawTimer_Tick);
-            // 
             // drawPanel
             // 
             this.drawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -125,12 +119,14 @@
             this.ClientSize = new System.Drawing.Size(608, 475);
             this.Controls.Add(this.drawPanel);
             this.Controls.Add(this.menuStrip);
+            this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip;
             this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(614, 500);
             this.Name = "MainForm";
             this.Text = "Frogger - von Nils";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_FormClosing);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MainForm_KeyDown);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -149,7 +145,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuPauseResume;
         private System.Windows.Forms.ToolStripTextBox menuPlayerName;
         private System.Windows.Forms.Timer updateTimer;
-        private System.Windows.Forms.Timer drawTimer;
         private System.Windows.Forms.Panel drawPanel;
     }
 }

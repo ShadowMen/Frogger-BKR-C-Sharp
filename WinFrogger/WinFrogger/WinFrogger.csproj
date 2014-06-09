@@ -48,9 +48,6 @@
   <ItemGroup>
     <Compile Include="Car.cs" />
     <Compile Include="Drawable.cs" />
-    <Compile Include="DrawPanel.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Field.cs" />
     <Compile Include="Finish.cs" />
     <Compile Include="Frog.cs" />

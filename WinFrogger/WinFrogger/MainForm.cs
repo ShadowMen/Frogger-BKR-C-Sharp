@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace WinFrogger
 {
@@ -13,33 +14,46 @@ namespace WinFrogger
     {
         // Variabeln
         Game game;
+        Thread drawThread;
 
         public MainForm()
         {
             InitializeComponent();
 
             game = new Game();
+
+            // Threaded Drawing
+            drawThread = new Thread(new ThreadStart(this.Draw));
+        }
+
+        private void Draw()
+        {
+            BufferedGraphicsContext context = BufferedGraphicsManager.Current;
+            BufferedGraphics myBuffer =  context.Allocate(drawPanel.CreateGraphics(), drawPanel.Bounds);
+            while (true)
+            {
+                game.Draw(myBuffer.Graphics);
+                myBuffer.Render();
+            }
         }
 
         private void menuStartEasy_Click(object sender, EventArgs e)
         {
             game.Start(DifficultyLevel.Easy);
-            drawTimer.Start();
             updateTimer.Start();
+            drawThread.Start();
             menuPauseResume.Enabled = true;
         }
 
         private void menuStartNormal_Click(object sender, EventArgs e)
         {
             game.Start(DifficultyLevel.Normal);
-            drawTimer.Start();
             updateTimer.Start();
         }
 
         private void menuStartHard_Click(object sender, EventArgs e)
         {
             game.Start(DifficultyLevel.Hard);
-            drawTimer.Start();
             updateTimer.Start();
         }
 
@@ -48,23 +62,15 @@ namespace WinFrogger
             if (game.IsGameRunning)
             {
                 game.Pause();
-                drawTimer.Stop();
                 updateTimer.Stop();
                 menuPauseResume.Text = "Weiter";
             }
             else
             {
                 game.Resume();
-                drawTimer.Start();
                 updateTimer.Start();
                 menuPauseResume.Text = "Pause";
             }
-        }
-
-        private void drawTimer_Tick(object sender, EventArgs e)
-        {
-            Graphics gfx = drawPanel.CreateGraphics();
-            game.Draw(gfx);
         }
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
@@ -75,6 +81,11 @@ namespace WinFrogger
         private void updateTimer_Tick(object sender, EventArgs e)
         {
             game.Update();
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            drawThread.Abort();
         }
     }
 }
