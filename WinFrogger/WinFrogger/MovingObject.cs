@@ -53,6 +53,12 @@ namespace WinFrogger
             set { texture = value; }
         }
 
+        protected Direction ObjDirection
+        {
+            get { return direction; }
+            set { direction = value; }
+        }
+
 
         // Konstruktor
         public MovingObject(Image ImgTex, Direction direct, int pX = 0, int pY = 0, int oSpeed = 1, int oWidth = 16, int oHeight = 16, bool wAble = true)

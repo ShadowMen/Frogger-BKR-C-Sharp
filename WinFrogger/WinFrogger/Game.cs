@@ -30,6 +30,9 @@ namespace WinFrogger
 
             // Car
         List<Car> cars = new List<Car>();
+
+            // Turtles
+        List<Turtle> turtles = new List<Turtle>();
         
 
         // Konstruktor
@@ -42,9 +45,9 @@ namespace WinFrogger
             this.GenerateField();
 
             frog = new Frog(Image.FromFile("data/textures/frog.png"), 288, 384, FrogDirection.Up);
-            drawlist.Add(frog);
 
             for (int i = 0; i < 12; i++) this.AddRandomCar();
+            for (int i = 0; i < 3; i++) this.addRandomTurtle();
         }
 
         // Properties
@@ -124,6 +127,12 @@ namespace WinFrogger
                 cars[i].Update();
                 this.CheckCars(cars[i]);
             }
+
+            for (int i = 0; i < turtles.Count; i++)
+            {
+                turtles[i].Update();
+                this.CheckTurtles(turtles[i]);
+            }
         }
 
         private void MoveFrog()
@@ -149,6 +158,15 @@ namespace WinFrogger
             {
                 cars.Remove(car);
                 this.AddRandomCar();
+            }
+        }
+
+        private void CheckTurtles(Turtle turtle)
+        {
+            if (turtle.Position.X <= -32 || turtle.Position.X >= 32 * field.FieldWidth)
+            {
+                turtles.Remove(turtle);
+                this.addRandomTurtle();
             }
         }
 
@@ -258,6 +276,23 @@ namespace WinFrogger
             drawlist.Add(cars[cars.Count - 1]);
         }
 
+        private void addRandomTurtle()
+        {
+            Random rnd = new Random(DateTime.Now.Millisecond);
+
+            switch (rnd.Next(0, 2))
+            {
+                case 0:
+                    turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Right, -32, 64, rnd.Next(2, 8), true, rnd.Next(60, 180), true));
+                    break;
+                case 1:
+                    turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Left, 608, 128, rnd.Next(2, 8), true, rnd.Next(60, 180)));
+                    break;
+            }
+
+            drawlist.Add(turtles[turtles.Count - 1]);
+        }
+
         // Grafik Funktionen
         public void Draw(Graphics gfx)
         {
@@ -267,6 +302,8 @@ namespace WinFrogger
             {
                 drawlist[i].Draw(gfx);
             }
+
+            frog.Draw(gfx);
         }
     }
 }
