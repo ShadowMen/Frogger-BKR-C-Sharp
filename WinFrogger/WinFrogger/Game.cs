@@ -6,17 +6,9 @@ using System.Drawing;
 
 namespace WinFrogger
 {
-    enum DifficultyLevel
-    {
-        Easy,
-        Normal,
-        Hard
-    };
-
     class Game
     {
         // Variabeln
-        DifficultyLevel difficultyLvl;
         bool isGameRunning;
         List<Drawable> drawlist = new List<Drawable>();
 
@@ -56,18 +48,10 @@ namespace WinFrogger
             get { return isGameRunning; }
         }
 
-        public DifficultyLevel Difficulty
-        {
-            get { return difficultyLvl; }
-        }
-
         // Game Funktionen
-        public void Start(DifficultyLevel difficulty)
+        public void Start()
         {
-            if (difficultyLvl == difficulty) return;
-
             this.Reset();
-            difficultyLvl = difficulty;
             isGameRunning = true;
         }
 

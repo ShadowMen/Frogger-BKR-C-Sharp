@@ -15,6 +15,7 @@ namespace WinFrogger
         // Variabeln
         Game game;
         Thread drawThread;
+        volatile bool stopThread = false;
 
         public MainForm()
         {
@@ -30,31 +31,20 @@ namespace WinFrogger
         {
             BufferedGraphicsContext context = BufferedGraphicsManager.Current;
             BufferedGraphics myBuffer =  context.Allocate(drawPanel.CreateGraphics(), drawPanel.Bounds);
-            while (true)
+            
+            while (!stopThread)
             {
                 game.Draw(myBuffer.Graphics);
                 myBuffer.Render();
             }
         }
 
-        private void menuStartEasy_Click(object sender, EventArgs e)
+        private void menuDropdownStart_Click(object sender, EventArgs e)
         {
-            game.Start(DifficultyLevel.Easy);
+            if (game.IsGameRunning) return;
             updateTimer.Start();
             drawThread.Start();
             menuPauseResume.Enabled = true;
-        }
-
-        private void menuStartNormal_Click(object sender, EventArgs e)
-        {
-            game.Start(DifficultyLevel.Normal);
-            updateTimer.Start();
-        }
-
-        private void menuStartHard_Click(object sender, EventArgs e)
-        {
-            game.Start(DifficultyLevel.Hard);
-            updateTimer.Start();
         }
 
         private void menuPauseResume_Click(object sender, EventArgs e)
@@ -85,6 +75,7 @@ namespace WinFrogger
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
+            stopThread = true;
             drawThread.Abort();
         }
     }

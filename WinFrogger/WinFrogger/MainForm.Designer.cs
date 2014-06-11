@@ -31,9 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuDropdownStart = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStartEasy = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStartNormal = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuStartHard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPauseResume = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPlayerName = new System.Windows.Forms.ToolStripTextBox();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
@@ -55,34 +52,10 @@
             // 
             // menuDropdownStart
             // 
-            this.menuDropdownStart.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuStartEasy,
-            this.menuStartNormal,
-            this.menuStartHard});
             this.menuDropdownStart.Name = "menuDropdownStart";
             this.menuDropdownStart.Size = new System.Drawing.Size(43, 21);
             this.menuDropdownStart.Text = "Start";
-            // 
-            // menuStartEasy
-            // 
-            this.menuStartEasy.Name = "menuStartEasy";
-            this.menuStartEasy.Size = new System.Drawing.Size(120, 22);
-            this.menuStartEasy.Text = "Leicht";
-            this.menuStartEasy.Click += new System.EventHandler(this.menuStartEasy_Click);
-            // 
-            // menuStartNormal
-            // 
-            this.menuStartNormal.Name = "menuStartNormal";
-            this.menuStartNormal.Size = new System.Drawing.Size(120, 22);
-            this.menuStartNormal.Text = "Normal";
-            this.menuStartNormal.Click += new System.EventHandler(this.menuStartNormal_Click);
-            // 
-            // menuStartHard
-            // 
-            this.menuStartHard.Name = "menuStartHard";
-            this.menuStartHard.Size = new System.Drawing.Size(120, 22);
-            this.menuStartHard.Text = "Schwer";
-            this.menuStartHard.Click += new System.EventHandler(this.menuStartHard_Click);
+            this.menuDropdownStart.Click += new System.EventHandler(this.menuDropdownStart_Click);
             // 
             // menuPauseResume
             // 
@@ -139,9 +112,6 @@
 
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem menuDropdownStart;
-        private System.Windows.Forms.ToolStripMenuItem menuStartEasy;
-        private System.Windows.Forms.ToolStripMenuItem menuStartNormal;
-        private System.Windows.Forms.ToolStripMenuItem menuStartHard;
         private System.Windows.Forms.ToolStripMenuItem menuPauseResume;
         private System.Windows.Forms.ToolStripTextBox menuPlayerName;
         private System.Windows.Forms.Timer updateTimer;
