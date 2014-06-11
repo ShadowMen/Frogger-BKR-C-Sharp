@@ -29,7 +29,7 @@ namespace WinFrogger
             textRect = new Rectangle(0, 0, 32, 32);
             goDownTime = DownTime;
             state = TurtleState.Up;
-            if (flipedImage) base.Texture.RotateFlip(RotateFlipType.Rotate180FlipNone);
+            if (flipedImage) textRect.Y = 32;
         }
 
         public override void Update()
@@ -47,7 +47,7 @@ namespace WinFrogger
                     state = TurtleState.Down;
                     textRect.X = 64;
                     base.Walkable = false;
-                    goDownTimer = 20;
+                    goDownTimer = goDownTime / 2;
                 }
                 else if (state == TurtleState.Down)
                 {
