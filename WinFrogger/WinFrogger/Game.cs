@@ -6,10 +6,17 @@ using System.Drawing;
 
 namespace WinFrogger
 {
+    enum GameState
+    {
+        Stopped,
+        Running,
+        Paused
+    };
+
     class Game
     {
         // Variabeln
-        bool isGameRunning;
+        GameState gameState;
         List<Drawable> drawlist = new List<Drawable>();
 
             // Frog
@@ -30,47 +37,68 @@ namespace WinFrogger
         // Konstruktor
         public Game()
         {
-            isGameRunning = false;
+            gameState = GameState.Stopped;
 
             field = new Field();
-            drawlist.Add(field);
-            this.GenerateField();
 
             frog = new Frog(Image.FromFile("data/textures/frog.png"), 288, 384, FrogDirection.Up);
-
-            for (int i = 0; i < 12; i++) this.AddRandomCar();
-            for (int i = 0; i < 3; i++) this.addRandomTurtle();
         }
 
         // Properties
-        public bool IsGameRunning
+        public GameState State
         {
-            get { return isGameRunning; }
+            get { return gameState; }
         }
 
         // Game Funktionen
         public void Start()
         {
+            gameState = GameState.Running;
             this.Reset();
-            isGameRunning = true;
         }
 
         public void Pause()
         {
-            isGameRunning = false;
+            gameState = GameState.Paused;
         }
 
         public void Resume()
         {
-            isGameRunning = true;
+            gameState = GameState.Running;
         }
 
-        public void Reset()
+        public void Stop()
         {
+            gameState = GameState.Stopped;
+        }
+
+        private void Reset()
+        {
+            // Zeichenliste leeren
+            drawlist.Clear();
+
+            // Feld neu erstellen
+            this.GenerateField();
+            drawlist.Add(field);
+
+            // Frosch zurücksetzen
+            frog.Position = new Point(288, 384);
+            frog.Direction = FrogDirection.Up;
+
+            // Alle Autos löschen
+            cars.Clear();
+            // Neue Autos erstellen
+            for (int i = 0; i < 12; i++) this.AddRandomCar();
+            
+            // Alle Schildkröten löschen
+            turtles.Clear();
+            // Neue Schildkröten erstellen
+            for (int i = 0; i < 3; i++) this.addRandomTurtle();
         }
 
         public void HandleInput(System.Windows.Forms.Keys key)
         {
+            if (gameState != GameState.Running) return;
             if (frogMoving) return;
 
             switch (key)

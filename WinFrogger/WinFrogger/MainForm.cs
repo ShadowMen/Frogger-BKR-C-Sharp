@@ -22,9 +22,6 @@ namespace WinFrogger
             InitializeComponent();
 
             game = new Game();
-
-            // Threaded Drawing
-            drawThread = new Thread(new ThreadStart(this.Draw));
         }
 
         private void Draw()
@@ -41,15 +38,48 @@ namespace WinFrogger
 
         private void menuDropdownStart_Click(object sender, EventArgs e)
         {
-            if (game.IsGameRunning) return;
-            updateTimer.Start();
-            drawThread.Start();
-            menuPauseResume.Enabled = true;
+            if (game.State == GameState.Stopped)
+            {
+                // Game
+                game.Start();
+
+                // Update Timer
+                updateTimer.Start();
+
+                // Draw Thread
+                if (drawThread == null) drawThread = new Thread(new ThreadStart(this.Draw));
+                stopThread = false;
+                drawThread.Start();
+
+                // Menu
+                menuPauseResume.Enabled = true;
+                menuDropdownStart.Text = "Stop";
+            }
+            else if (game.State == GameState.Paused)
+            {
+                // Game
+                game.Stop();
+
+                // Update Timer
+                updateTimer.Stop();
+
+                // Thread
+                stopThread = true;
+                drawThread.Abort();
+                drawThread = null;
+
+                // Menu
+                menuPauseResume.Enabled = false;
+                menuDropdownStart.Text = "Start";
+
+                // Ausgabe leeren
+                drawPanel.Invalidate();
+            }
         }
 
         private void menuPauseResume_Click(object sender, EventArgs e)
         {
-            if (game.IsGameRunning)
+            if (game.State == GameState.Running)
             {
                 game.Pause();
                 updateTimer.Stop();

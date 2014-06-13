@@ -63,6 +63,7 @@ namespace WinFrogger
         public FrogDirection Direction
         {
             get { return direction; }
+            set { direction = value; }
         }
 
         // Konstruktor
