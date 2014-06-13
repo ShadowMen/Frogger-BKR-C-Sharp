@@ -19,19 +19,22 @@ namespace WinFrogger
         GameState gameState;
         List<Drawable> drawlist = new List<Drawable>();
 
-            // Frog
+        // Frog
         bool frogMoving = false;
         Point newFrogPos;
         Frog frog;
 
-            // Field
+        // Field
         Field field;
 
-            // Car
+        // Cars
         List<Car> cars = new List<Car>();
 
-            // Turtles
+        // Turtles
         List<Turtle> turtles = new List<Turtle>();
+
+        // Trunks
+        List<Trunk> trunks = new List<Trunk>();
         
 
         // Konstruktor
@@ -94,6 +97,11 @@ namespace WinFrogger
             turtles.Clear();
             // Neue Schildkröten erstellen
             for (int i = 0; i < 3; i++) this.addRandomTurtle();
+
+            // Alle Baumstämme löschen
+            trunks.Clear();
+            // Neue Trunks erstellen
+            for (int i = 0; i < 3; i++) this.addRandomTrunk();
         }
 
         public void HandleInput(System.Windows.Forms.Keys key)
@@ -132,18 +140,28 @@ namespace WinFrogger
 
         public void Update()
         {
+            // Frosch aktualisieren
             this.MoveFrog();
 
+            // Alle Autos aktualisieren
             for (int i = 0; i < cars.Count; i++)
             {
                 cars[i].Update();
                 this.CheckCars(cars[i]);
             }
 
+            // Alle Schildkröten aktualisieren
             for (int i = 0; i < turtles.Count; i++)
             {
                 turtles[i].Update();
                 this.CheckTurtles(turtles[i]);
+            }
+
+            // Alle Baumstämme aktualisieren
+            for (int i = 0; i < trunks.Count; i++)
+            {
+                trunks[i].Update();
+                this.CheckTrunks(trunks[i]);
             }
         }
 
@@ -179,6 +197,15 @@ namespace WinFrogger
             {
                 turtles.Remove(turtle);
                 this.addRandomTurtle();
+            }
+        }
+
+        private void CheckTrunks(Trunk trunk)
+        {
+            if (trunk.Position.X <= -64 || trunk.Position.X >= 32 * field.FieldWidth)
+            {
+                trunks.Remove(trunk);
+                this.addRandomTrunk();
             }
         }
 
@@ -305,15 +332,29 @@ namespace WinFrogger
             drawlist.Add(turtles[turtles.Count - 1]);
         }
 
+        private void addRandomTrunk()
+        {
+            Random rnd = new Random(DateTime.Now.Millisecond);
+
+            switch (rnd.Next(0, 2))
+            {
+                case 0:
+                    trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Right, -64, 96, rnd.Next(2, 8), true, true));
+                    break;
+                case 1:
+                    trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Left, 608, 160, rnd.Next(2, 8), true));
+                    break;
+            }
+
+            drawlist.Add(trunks[trunks.Count - 1]);
+        }
+
         // Grafik Funktionen
         public void Draw(Graphics gfx)
         {
             gfx.Clear(Color.Black);
 
-            for (int i = 0; i < drawlist.Count; i++)
-            {
-                drawlist[i].Draw(gfx);
-            }
+            for (int i = 0; i < drawlist.Count; i++) drawlist[i].Draw(gfx);
 
             frog.Draw(gfx);
         }

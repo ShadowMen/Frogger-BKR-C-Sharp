@@ -12,9 +12,10 @@ namespace WinFrogger
 
 
         // Konstruktor
-        public Trunk(Image ImgTex, Direction direct, int pX = 0, int pY = 0, int oSpeed = 1, int oWidth = 16, int oHeight = 16, bool wAble = true)
-            : base(ImgTex, direct, pX, pY, oSpeed, oWidth, oHeight, wAble)
+        public Trunk(Image ImgTex, Direction direct, int pX = 0, int pY = 0, int oSpeed = 1, bool wAble = true, bool flipedImage = false)
+            : base(ImgTex, direct, pX, pY, oSpeed, 64, 32, wAble)
         {
+            if (flipedImage) base.Texture.RotateFlip(RotateFlipType.Rotate180FlipNone);
         }
 
         public override void Update()
