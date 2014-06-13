@@ -106,7 +106,7 @@ namespace WinFrogger
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             stopThread = true;
-            drawThread.Abort();
+            if(drawThread != null) drawThread.Abort();
         }
     }
 }

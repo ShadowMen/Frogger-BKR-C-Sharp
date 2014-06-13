@@ -119,6 +119,12 @@ namespace WinFrogger
             }
         }
 
+        public void Die()
+        {
+            textRect.Y = 64;
+            status = FrogStatus.Death;
+        }
+
         public override void Draw(Graphics gfx)
         {
             gfx.DrawImage(texture, new Rectangle(position.X, position.Y, 32, 32), textRect, GraphicsUnit.Pixel);

@@ -20,7 +20,6 @@ namespace WinFrogger
         List<Drawable> drawlist = new List<Drawable>();
 
         // Frog
-        bool frogMoving = false;
         Point newFrogPos;
         Frog frog;
 
@@ -85,8 +84,7 @@ namespace WinFrogger
             drawlist.Add(field);
 
             // Frosch zurücksetzen
-            frog.Position = new Point(288, 384);
-            frog.Direction = FrogDirection.Up;
+            this.ResetFrog();
 
             // Alle Autos löschen
             cars.Clear();
@@ -104,33 +102,40 @@ namespace WinFrogger
             for (int i = 0; i < 3; i++) this.addRandomTrunk();
         }
 
+        private void ResetFrog()
+        {
+            frog.Position = new Point(288, 384);
+            frog.Direction = FrogDirection.Up;
+            frog.Status = FrogStatus.Alive;
+        }
+
         public void HandleInput(System.Windows.Forms.Keys key)
         {
             if (gameState != GameState.Running) return;
-            if (frogMoving) return;
+            if (frog.Status == FrogStatus.Jump) return;
 
             switch (key)
             {
                 case System.Windows.Forms.Keys.W:
-                    frogMoving = true;
+                    frog.Status = FrogStatus.Jump;
                     frog.TurnFrog(FrogDirection.Up);
                     newFrogPos = frog.Position;
                     newFrogPos.Y -= 32;
                     break;
                 case System.Windows.Forms.Keys.S:
-                    frogMoving = true;
+                    frog.Status = FrogStatus.Jump;
                     frog.TurnFrog(FrogDirection.Down);
                     newFrogPos = frog.Position;
                     newFrogPos.Y += 32;
                     break;
                 case System.Windows.Forms.Keys.D:
-                    frogMoving = true;
+                    frog.Status = FrogStatus.Jump;
                     frog.TurnFrog(FrogDirection.Right);
                     newFrogPos = frog.Position;
                     newFrogPos.X += 32;
                     break;
                 case System.Windows.Forms.Keys.A:
-                    frogMoving = true;
+                    frog.Status = FrogStatus.Jump;
                     frog.TurnFrog(FrogDirection.Left);
                     newFrogPos = frog.Position;
                     newFrogPos.X -= 32;
@@ -141,7 +146,9 @@ namespace WinFrogger
         public void Update()
         {
             // Frosch aktualisieren
+            this.CheckFrogCollision();
             this.MoveFrog();
+            if (frog.Status == FrogStatus.Death) this.ResetFrog();
 
             // Alle Autos aktualisieren
             for (int i = 0; i < cars.Count; i++)
@@ -167,7 +174,7 @@ namespace WinFrogger
 
         private void MoveFrog()
         {
-            if(frogMoving)
+            if(frog.Status == FrogStatus.Jump)
             {
                 if (!frog.Position.Equals(newFrogPos))
                 {
@@ -176,10 +183,60 @@ namespace WinFrogger
                 }
                 else
                 {
-                    frogMoving = false;
                     frog.Status = FrogStatus.Alive;
                 }
             }
+        }
+
+        private void CheckFrogCollision()
+        {
+            // Springt der Frosch soll keine weiter Kollission-Überprüfung vorgenommen werden.
+            if (frog.Status == FrogStatus.Jump) return;
+
+            // Überprüfe Kollission mit Auto
+            for (int i = 0; i < cars.Count; i++)
+            {
+                if (frog.Position.X + 16 >= cars[i].Position.X &&
+                    frog.Position.X < cars[i].Position.X + cars[i].Width &&
+                    frog.Position.Y >= cars[i].Position.Y &&
+                    frog.Position.Y < cars[i].Position.Y + cars[i].Height)
+                {
+                    if (!cars[i].Walkable) frog.Die();
+                    return;
+                }
+            }
+
+            // Überprüfe Kollission mit Baumstamm
+            for (int i = 0; i < trunks.Count; i++)
+            {
+                if (frog.Position.X + 16 >= trunks[i].Position.X &&
+                    frog.Position.X < trunks[i].Position.X + trunks[i].Width &&
+                    frog.Position.Y >= trunks[i].Position.Y &&
+                    frog.Position.Y < trunks[i].Position.Y + trunks[i].Height)
+                {
+                    if (trunks[i].ObjDirection == Direction.Left) frog.Position = new Point(frog.Position.X - trunks[i].Speed, frog.Position.Y);
+                    else frog.Position = new Point(frog.Position.X + trunks[i].Speed, frog.Position.Y);
+                    return;
+                }
+            }
+
+            // Überprüfe Kollission mit Schildkröte
+            for (int i = 0; i < turtles.Count; i++)
+            {
+                if (frog.Position.X + 16 >= turtles[i].Position.X &&
+                    frog.Position.X < turtles[i].Position.X + turtles[i].Width &&
+                    frog.Position.Y >= turtles[i].Position.Y &&
+                    frog.Position.Y < turtles[i].Position.Y + turtles[i].Height)
+                {
+                    if (!turtles[i].Walkable) break;
+                    if (turtles[i].ObjDirection == Direction.Left) frog.Position = new Point(frog.Position.X - turtles[i].Speed, frog.Position.Y);
+                    else frog.Position = new Point(frog.Position.X + turtles[i].Speed, frog.Position.Y);
+                    return;
+                }
+            }
+
+            // Überprüfen ob Frosch im Wasser ist
+            if (field.GetFieldTypeAt(frog.Position.X, frog.Position.Y) == FieldType.Deathzone) frog.Die();
         }
 
         private void CheckCars(Car car)

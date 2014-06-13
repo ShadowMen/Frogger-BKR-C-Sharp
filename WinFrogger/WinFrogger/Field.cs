@@ -77,7 +77,11 @@ namespace WinFrogger
 
         public FieldType GetFieldTypeAt(int posX, int posY)
         {
-            return fieldType[posY % 32, posY % 32];
+            int fieldPosX = posX / 32;
+            int fieldPosY = posY / 32;
+
+            if (fieldPosX < 0 || fieldPosX >= FWidth || fieldPosY < 0 || fieldPosY >= FHeight) return FieldType.Deathzone;
+            else return fieldType[fieldPosY, fieldPosX];
         }
 
         public override void Draw(Graphics gfx)

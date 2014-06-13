@@ -41,10 +41,21 @@ namespace WinFrogger
             protected set { height = value; }
         }
 
+        public int Speed
+        {
+            get { return speed; }
+        }
+
         public bool Walkable
         {
             get { return walkable; }
             protected set { walkable = value; }
+        }
+
+        public Direction ObjDirection
+        {
+            get { return direction; }
+            protected set { direction = value; }
         }
 
         protected Image Texture
@@ -52,13 +63,6 @@ namespace WinFrogger
             get { return texture; }
             set { texture = value; }
         }
-
-        protected Direction ObjDirection
-        {
-            get { return direction; }
-            set { direction = value; }
-        }
-
 
         // Konstruktor
         public MovingObject(Image ImgTex, Direction direct, int pX = 0, int pY = 0, int oSpeed = 1, int oWidth = 16, int oHeight = 16, bool wAble = true)
