@@ -26,19 +26,17 @@ namespace WinFrogger
         public Point Position
         {
             get { return position; }
-            protected set { position = value; }
+            set { position = value; }
         }
 
         public int Width
         {
             get { return width; }
-            protected set { width = value; }
         }
 
         public int Height
         {
             get { return height; }
-            protected set { height = value; }
         }
 
         public int Speed

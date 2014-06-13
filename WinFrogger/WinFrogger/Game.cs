@@ -76,6 +76,8 @@ namespace WinFrogger
 
         private void Reset()
         {
+            Random rnd = new Random(DateTime.Now.Millisecond);
+
             // Zeichenliste leeren
             drawlist.Clear();
 
@@ -89,17 +91,29 @@ namespace WinFrogger
             // Alle Autos löschen
             cars.Clear();
             // Neue Autos erstellen
-            for (int i = 0; i < 12; i++) this.AddRandomCar();
-            
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 224, 4, 32, 32, false, true));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32 - i * rnd.Next(128, 256), 256, 4, 32, 32, false));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 288, 4, 32, 32, false, true));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32 - i * rnd.Next(128, 256), 320, 4, 32, 32, false));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 352, 4, 32, 32, false, true));
+            // Autos zur Zeichenliste hinzufügen
+            for (int i = 0; i < cars.Count; i++) drawlist.Add(cars[i]);
+
             // Alle Schildkröten löschen
             turtles.Clear();
             // Neue Schildkröten erstellen
-            for (int i = 0; i < 3; i++) this.addRandomTurtle();
+            for (int i = 0; i < 3; i++) turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Right, -32 - i * rnd.Next(128, 256), 64, 4, true, rnd.Next(120, 1200), true));
+            for (int i = 0; i < 3; i++) turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Right, -32 - i * rnd.Next(128, 256), 128, 4, true, rnd.Next(120, 1200), true));
+            // Schildkröten zur Zeichenliste hinzufügen
+            for (int i = 0; i < turtles.Count; i++) drawlist.Add(turtles[i]);
 
             // Alle Baumstämme löschen
             trunks.Clear();
-            // Neue Trunks erstellen
-            for (int i = 0; i < 3; i++) this.addRandomTrunk();
+            // Neue Baumstämme erstellen
+            for (int i = 0; i < 3; i++) trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 160, 4, true));
+            for (int i = 0; i < 3; i++) trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 96, 4, true));
+            // Baumstämme zur Zeichenliste hinzufügen
+            for (int i = 0; i < trunks.Count; i++) drawlist.Add(trunks[i]);
         }
 
         private void ResetFrog()
@@ -241,29 +255,20 @@ namespace WinFrogger
 
         private void CheckCars(Car car)
         {
-            if (car.Position.X <= -32 || car.Position.X >= 32 * field.FieldWidth)
-            {
-                cars.Remove(car);
-                this.AddRandomCar();
-            }
+            if (car.Position.X <= -32 && car.ObjDirection == Direction.Left) car.Position = new Point(32 * field.FieldWidth, car.Position.Y);
+            else if (car.Position.X >= 32 * field.FieldWidth && car.ObjDirection == Direction.Right) car.Position = new Point(-32, car.Position.Y);
         }
 
         private void CheckTurtles(Turtle turtle)
         {
-            if (turtle.Position.X <= -32 || turtle.Position.X >= 32 * field.FieldWidth)
-            {
-                turtles.Remove(turtle);
-                this.addRandomTurtle();
-            }
+            if (turtle.Position.X <= -32 && turtle.ObjDirection == Direction.Left) turtle.Position = new Point(32 * field.FieldWidth, turtle.Position.Y);
+            else if (turtle.Position.X >= 32 * field.FieldWidth && turtle.ObjDirection == Direction.Right) turtle.Position = new Point(-32, turtle.Position.Y);
         }
 
         private void CheckTrunks(Trunk trunk)
         {
-            if (trunk.Position.X <= -64 || trunk.Position.X >= 32 * field.FieldWidth)
-            {
-                trunks.Remove(trunk);
-                this.addRandomTrunk();
-            }
+            if (trunk.Position.X <= -32 && trunk.ObjDirection == Direction.Left) trunk.Position = new Point(32 * field.FieldWidth, trunk.Position.Y);
+            else if (trunk.Position.X >= 32 * field.FieldWidth && trunk.ObjDirection == Direction.Right) trunk.Position = new Point(-32, trunk.Position.Y);
         }
 
         private void GenerateField()
@@ -341,69 +346,6 @@ namespace WinFrogger
                     }
                 }
             }
-        }
-
-        private void AddRandomCar()
-        {
-            Random rnd = new Random(DateTime.Now.Millisecond);
-
-            switch (rnd.Next(0, 5))
-            {
-                case 0:
-                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608, 224, rnd.Next(2, 16), 32, 32, false, true));
-                    break;
-                case 1:
-                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32, 256, rnd.Next(2, 16), 32, 32, false));
-                    break;
-                case 2:
-                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608, 288, rnd.Next(2, 16), 32, 32, false, true));
-                    break;
-                case 3:
-                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32, 320, rnd.Next(2, 16), 32, 32, false));
-                    break;
-                case 4:
-                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608, 352, rnd.Next(2, 16), 32, 32, false, true));
-                    break;
-                case 5:
-                    cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32, 384, rnd.Next(2, 16), 32, 32, false));
-                    break;
-            }
-
-            drawlist.Add(cars[cars.Count - 1]);
-        }
-
-        private void addRandomTurtle()
-        {
-            Random rnd = new Random(DateTime.Now.Millisecond);
-
-            switch (rnd.Next(0, 2))
-            {
-                case 0:
-                    turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Right, -32, 64, rnd.Next(2, 8), true, rnd.Next(60, 180), true));
-                    break;
-                case 1:
-                    turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Left, 608, 128, rnd.Next(2, 8), true, rnd.Next(60, 180)));
-                    break;
-            }
-
-            drawlist.Add(turtles[turtles.Count - 1]);
-        }
-
-        private void addRandomTrunk()
-        {
-            Random rnd = new Random(DateTime.Now.Millisecond);
-
-            switch (rnd.Next(0, 2))
-            {
-                case 0:
-                    trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Right, -64, 96, rnd.Next(2, 8), true, true));
-                    break;
-                case 1:
-                    trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Left, 608, 160, rnd.Next(2, 8), true));
-                    break;
-            }
-
-            drawlist.Add(trunks[trunks.Count - 1]);
         }
 
         // Grafik Funktionen
