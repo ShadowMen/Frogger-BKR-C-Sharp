@@ -35,6 +35,7 @@
             this.menuPlayerName = new System.Windows.Forms.ToolStripTextBox();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.drawPanel = new System.Windows.Forms.Panel();
+            this.menuShowInfoBox = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,6 +44,7 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuDropdownStart,
             this.menuPauseResume,
+            this.menuShowInfoBox,
             this.menuPlayerName});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
@@ -85,6 +87,13 @@
             this.drawPanel.Size = new System.Drawing.Size(608, 450);
             this.drawPanel.TabIndex = 2;
             // 
+            // menuShowInfoBox
+            // 
+            this.menuShowInfoBox.Name = "menuShowInfoBox";
+            this.menuShowInfoBox.Size = new System.Drawing.Size(39, 21);
+            this.menuShowInfoBox.Text = "Info";
+            this.menuShowInfoBox.Click += new System.EventHandler(this.menuShowInfoBox_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -116,6 +125,7 @@
         private System.Windows.Forms.ToolStripTextBox menuPlayerName;
         private System.Windows.Forms.Timer updateTimer;
         private System.Windows.Forms.Panel drawPanel;
+        private System.Windows.Forms.ToolStripMenuItem menuShowInfoBox;
     }
 }
 

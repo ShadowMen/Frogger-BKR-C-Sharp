@@ -162,6 +162,9 @@ namespace WinFrogger
 
         public void Update()
         {
+            // Spiel nur aktualisieren, wenn es auch läuft
+            if (gameState != GameState.Running) return;
+
             // Frosch aktualisieren
             this.CheckFrogCollision();
             this.MoveFrog();

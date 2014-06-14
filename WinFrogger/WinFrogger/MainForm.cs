@@ -115,5 +115,19 @@ namespace WinFrogger
             stopThread = true;
             if(drawThread != null) drawThread.Abort();
         }
+
+        private void menuShowInfoBox_Click(object sender, EventArgs e)
+        {
+            InfoBox infobox = new InfoBox();
+            
+            // Spiel pausieren, wenn es läuft
+            if(game.State == GameState.Running) game.Pause();
+            
+            // Infobox anzeigen
+            infobox.ShowDialog();
+            
+            // Weiterspielen, wenn das Spiel pausiert ist
+            if(game.State == GameState.Paused) game.Resume();
+        }
     }
 }
