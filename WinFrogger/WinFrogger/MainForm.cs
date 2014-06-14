@@ -46,12 +46,16 @@ namespace WinFrogger
                 // Update Timer
                 updateTimer.Start();
 
+                // Hintergrund Musik
+                game.PlayMusic();
+
                 // Draw Thread
                 if (drawThread == null) drawThread = new Thread(new ThreadStart(this.Draw));
                 stopThread = false;
                 drawThread.Start();
 
                 // Menu
+                menuPauseResume.Text = "Pause";
                 menuPauseResume.Enabled = true;
                 menuDropdownStart.Text = "Stop";
             }
@@ -62,6 +66,9 @@ namespace WinFrogger
 
                 // Update Timer
                 updateTimer.Stop();
+
+                // Hintergrund Musik
+                game.StopMusic();
 
                 // Thread
                 stopThread = true;

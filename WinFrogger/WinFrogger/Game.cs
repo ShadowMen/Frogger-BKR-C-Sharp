@@ -35,6 +35,8 @@ namespace WinFrogger
         // Trunks
         List<Trunk> trunks = new List<Trunk>();
         
+        // Sound
+        System.Media.SoundPlayer bgMusic;
 
         // Konstruktor
         public Game()
@@ -42,6 +44,7 @@ namespace WinFrogger
             gameState = GameState.Stopped;
 
             field = new Field();
+            bgMusic = new System.Media.SoundPlayer("data/sounds/background_music.wav");
 
             frog = new Frog(Image.FromFile("data/textures/frog.png"), 288, 384, FrogDirection.Up);
         }
@@ -119,7 +122,7 @@ namespace WinFrogger
         private void ResetFrog()
         {
             frog.Position = new Point(288, 384);
-            frog.Direction = FrogDirection.Up;
+            frog.TurnFrog(FrogDirection.Up);
             frog.Status = FrogStatus.Alive;
         }
 
@@ -210,7 +213,7 @@ namespace WinFrogger
             // Überprüfe Kollission mit Auto
             for (int i = 0; i < cars.Count; i++)
             {
-                if (frog.Position.X + 16 >= cars[i].Position.X &&
+                if (frog.Position.X + 32 >= cars[i].Position.X &&
                     frog.Position.X < cars[i].Position.X + cars[i].Width &&
                     frog.Position.Y >= cars[i].Position.Y &&
                     frog.Position.Y < cars[i].Position.Y + cars[i].Height)
@@ -249,8 +252,8 @@ namespace WinFrogger
                 }
             }
 
-            // Überprüfen ob Frosch im Wasser ist
-            if (field.GetFieldTypeAt(frog.Position.X, frog.Position.Y) == FieldType.Deathzone) frog.Die();
+            // Überprüfen ob Frosch in einer Todeszone ist
+            if (field.GetFieldTypeAt(frog.Position.X + 16, frog.Position.Y + 16) == FieldType.Deathzone) frog.Die();
         }
 
         private void CheckCars(Car car)
@@ -346,6 +349,16 @@ namespace WinFrogger
                     }
                 }
             }
+        }
+
+        public void PlayMusic()
+        {
+            bgMusic.PlayLooping();
+        }
+
+        public void StopMusic()
+        {
+            bgMusic.Stop();
         }
 
         // Grafik Funktionen
