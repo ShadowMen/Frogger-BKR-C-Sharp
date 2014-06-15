@@ -30,7 +30,6 @@ namespace WinFrogger
     {
         Walkable,
         Deathzone,
-        Savezone,
         Goal
     };
 

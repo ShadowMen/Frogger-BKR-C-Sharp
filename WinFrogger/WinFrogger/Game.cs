@@ -230,7 +230,7 @@ namespace WinFrogger
             for (int i = 0; i < trunks.Count; i++)
             {
                 if (frog.Position.X + 16 >= trunks[i].Position.X &&
-                    frog.Position.X < trunks[i].Position.X + trunks[i].Width &&
+                    frog.Position.X + 16 < trunks[i].Position.X + trunks[i].Width &&
                     frog.Position.Y >= trunks[i].Position.Y &&
                     frog.Position.Y < trunks[i].Position.Y + trunks[i].Height)
                 {
@@ -244,7 +244,7 @@ namespace WinFrogger
             for (int i = 0; i < turtles.Count; i++)
             {
                 if (frog.Position.X + 16 >= turtles[i].Position.X &&
-                    frog.Position.X < turtles[i].Position.X + turtles[i].Width &&
+                    frog.Position.X + 16 < turtles[i].Position.X + turtles[i].Width &&
                     frog.Position.Y >= turtles[i].Position.Y &&
                     frog.Position.Y < turtles[i].Position.Y + turtles[i].Height)
                 {
@@ -319,7 +319,7 @@ namespace WinFrogger
                     // Gehweg oben
                     else if (y == 6)
                     {
-                        field.FType[y, x] = FieldType.Savezone;
+                        field.FType[y, x] = FieldType.Walkable;
 
                         if (rnd.Next() % 2 == 0) field.FStyle[y, x] = FieldStyle.Sidewalk_Up_1;
                         else field.FStyle[y, x] = FieldStyle.Sidewalk_Up_2;
