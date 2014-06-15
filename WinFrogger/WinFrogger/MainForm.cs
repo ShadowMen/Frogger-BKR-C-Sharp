@@ -44,44 +44,11 @@ namespace WinFrogger
         {
             if (game.State == GameState.Stopped)
             {
-                // Game
-                game.Start();
-
-                // Update Timer
-                updateTimer.Start();
-
-                // Hintergrund Musik
-                game.PlayMusic();
-
-                // Draw Thread
-                if (drawThread == null) drawThread = new Thread(new ThreadStart(this.Draw));
-                stopThread = false;
-                drawThread.Start();
-
-                // Menu
-                menuPauseResume.Text = "Pause";
-                menuPauseResume.Enabled = true;
-                menuDropdownStart.Text = "Stop";
+                this.StartGame();
             }
             else if (game.State == GameState.Paused)
             {
-                // Game
-                game.Stop();
-
-                // Update Timer
-                updateTimer.Stop();
-
-                // Hintergrund Musik
-                game.StopMusic();
-
-                // Thread
-                stopThread = true;
-                drawThread.Abort();
-                drawThread = null;
-
-                // Menu
-                menuPauseResume.Enabled = false;
-                menuDropdownStart.Text = "Start";
+                this.StopGame();
 
                 // Ausgabe leeren
                 drawPanel.Invalidate();
@@ -121,6 +88,17 @@ namespace WinFrogger
         private void updateTimer_Tick(object sender, EventArgs e)
         {
             game.Update();
+
+            if (game.State == GameState.Won)
+            {
+                // Spiel stoppen
+                this.StopGame();
+
+                MessageBox.Show("Gewonnen!");
+
+                // Ausgabe leeren
+                drawPanel.Invalidate();
+            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -141,6 +119,49 @@ namespace WinFrogger
             
             // Weiterspielen, wenn das Spiel pausiert ist
             if(game.State == GameState.Paused) game.Resume();
+        }
+
+        private void StartGame()
+        {
+            // Game
+            game.Start();
+
+            // Update Timer
+            updateTimer.Start();
+
+            // Hintergrund Musik
+            game.PlayMusic();
+
+            // Draw Thread
+            if (drawThread == null) drawThread = new Thread(new ThreadStart(this.Draw));
+            stopThread = false;
+            drawThread.Start();
+
+            // Menu
+            menuPauseResume.Text = "Pause";
+            menuPauseResume.Enabled = true;
+            menuDropdownStart.Text = "Stop";
+        }
+
+        private void StopGame()
+        {
+            // Game
+            game.Stop();
+
+            // Update Timer
+            updateTimer.Stop();
+
+            // Hintergrund Musik
+            game.StopMusic();
+
+            // Thread
+            stopThread = true;
+            drawThread.Abort();
+            drawThread = null;
+
+            // Menu
+            menuPauseResume.Enabled = false;
+            menuDropdownStart.Text = "Start";
         }
     }
 }

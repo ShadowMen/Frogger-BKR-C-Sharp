@@ -11,8 +11,8 @@ namespace WinFrogger
         // Variabeln
         Image texture;
         bool used;
-        float posX, posY;
-        int imgSize;
+        Point pos;
+        const int size = 32;
 
         // Properties
         public bool Used
@@ -21,35 +21,28 @@ namespace WinFrogger
             set { used = value; }
         }
 
-        public float PosX
+        public Point Position
         {
-            get { return posX; }
+            get { return pos; }
         }
 
-        public float PosY
+        public int Size
         {
-            get { return posY; }
-        }
-
-        public int ImageSize
-        {
-            get { return imgSize; }
-            set { imgSize = value; }
+            get { return size; }
         }
 
         // Konstruktor
-        public Finish(Image imgTex, float pX, float pY, int imageSize, bool isUsed = false)
+        public Finish(Image imgTex, int pX, int pY, bool isUsed = false)
         {
             texture = imgTex;
-            posX = pX;
-            posY = pY;
-            imgSize = imageSize;
+            pos.X = pX;
+            pos.Y = pY;
             used = isUsed;
         }
 
         public override void Draw(Graphics gfx)
         {
-            if (used) gfx.DrawImage(texture, posX, posY, imgSize, imgSize);
+            if (used) gfx.DrawImage(texture, pos.X, pos.Y, size, size);
         }
     }
 }

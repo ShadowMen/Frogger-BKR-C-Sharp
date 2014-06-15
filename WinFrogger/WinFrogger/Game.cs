@@ -10,6 +10,7 @@ namespace WinFrogger
     {
         Stopped,
         Running,
+        Won,
         Paused
     };
 
@@ -25,6 +26,9 @@ namespace WinFrogger
 
         // Field
         Field field;
+
+        // Finish
+        List<Finish> finish = new List<Finish>();
 
         // Cars
         List<Car> cars = new List<Car>();
@@ -44,6 +48,7 @@ namespace WinFrogger
             gameState = GameState.Stopped;
 
             field = new Field();
+
             bgMusic = new System.Media.SoundPlayer("data/sounds/background_music.wav");
 
             frog = new Frog(Image.FromFile("data/textures/frog.png"), 288, 384, FrogDirection.Up);
@@ -87,6 +92,18 @@ namespace WinFrogger
             // Feld neu erstellen
             this.GenerateField();
             drawlist.Add(field);
+
+            // Ziele löschen
+            finish.Clear();
+            // Ziele erstellen
+            for (int i = 0; i < field.FieldWidth; i++)
+            {
+                if (field.GetFieldTypeAt(i * 32, 32) == FieldType.Goal)
+                {
+                    finish.Add(new Finish(Image.FromFile("data/textures/finish.png"), i * 32, 32));
+                    drawlist.Add(finish[finish.Count - 1]);
+                }
+            }
 
             // Frosch zurücksetzen
             this.ResetFrog();
@@ -178,6 +195,12 @@ namespace WinFrogger
             if(frog.Status != FrogStatus.Death) this.CheckFrogCollision();
             this.MoveFrog();
 
+            // Ziele überprüfen
+            if (this.CheckGoals())
+            {
+                gameState = GameState.Won;
+            }
+
             // Alle Autos aktualisieren
             for (int i = 0; i < cars.Count; i++)
             {
@@ -263,6 +286,28 @@ namespace WinFrogger
                 }
             }
 
+            // Überprüfe ob Frosch im Ziel ist
+            for (int i = 0; i < finish.Count; i++)
+            {
+                if (frog.Position.X + 16 >= finish[i].Position.X &&
+                    frog.Position.X + 16 < finish[i].Position.X + finish[i].Size &&
+                    frog.Position.Y >= finish[i].Position.Y &&
+                    frog.Position.Y < finish[i].Position.Y + finish[i].Size)
+                {
+                    if (finish[i].Used)
+                    {
+                        frog.Die();
+                        return;
+                    }
+                    else
+                    {
+                        finish[i].Used = true;
+                        this.ResetFrog();
+                        return;
+                    }
+                }
+            }
+
             // Überprüfen ob Frosch in einer Todeszone ist
             if (field.GetFieldTypeAt(frog.Position.X + 16, frog.Position.Y + 16) == FieldType.Deathzone) frog.Die();
         }
@@ -283,6 +328,18 @@ namespace WinFrogger
         {
             if (trunk.Position.X <= -32 && trunk.ObjDirection == Direction.Left) trunk.Position = new Point(32 * field.FieldWidth, trunk.Position.Y);
             else if (trunk.Position.X >= 32 * field.FieldWidth && trunk.ObjDirection == Direction.Right) trunk.Position = new Point(-32, trunk.Position.Y);
+        }
+
+        private bool CheckGoals()
+        {
+            int count = 0;
+            for (int i = 0; i < finish.Count; i++)
+            {
+                if (finish[i].Used) count++;
+            }
+
+            if (count == finish.Count) return true;
+            else return false;
         }
 
         private void GenerateField()
