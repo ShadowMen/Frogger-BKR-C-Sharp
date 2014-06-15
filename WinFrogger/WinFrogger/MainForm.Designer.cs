@@ -32,10 +32,9 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.menuDropdownStart = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPauseResume = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuPlayerName = new System.Windows.Forms.ToolStripTextBox();
+            this.menuShowInfoBox = new System.Windows.Forms.ToolStripMenuItem();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.drawPanel = new System.Windows.Forms.Panel();
-            this.menuShowInfoBox = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,18 +43,17 @@
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuDropdownStart,
             this.menuPauseResume,
-            this.menuShowInfoBox,
-            this.menuPlayerName});
+            this.menuShowInfoBox});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(608, 25);
+            this.menuStrip.Size = new System.Drawing.Size(608, 24);
             this.menuStrip.TabIndex = 1;
             this.menuStrip.Text = "menuStrip1";
             // 
             // menuDropdownStart
             // 
             this.menuDropdownStart.Name = "menuDropdownStart";
-            this.menuDropdownStart.Size = new System.Drawing.Size(43, 21);
+            this.menuDropdownStart.Size = new System.Drawing.Size(43, 20);
             this.menuDropdownStart.Text = "Start";
             this.menuDropdownStart.Click += new System.EventHandler(this.menuDropdownStart_Click);
             // 
@@ -63,16 +61,16 @@
             // 
             this.menuPauseResume.Enabled = false;
             this.menuPauseResume.Name = "menuPauseResume";
-            this.menuPauseResume.Size = new System.Drawing.Size(48, 21);
+            this.menuPauseResume.Size = new System.Drawing.Size(48, 20);
             this.menuPauseResume.Text = "Pause";
             this.menuPauseResume.Click += new System.EventHandler(this.menuPauseResume_Click);
             // 
-            // menuPlayerName
+            // menuShowInfoBox
             // 
-            this.menuPlayerName.Name = "menuPlayerName";
-            this.menuPlayerName.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.menuPlayerName.Size = new System.Drawing.Size(100, 21);
-            this.menuPlayerName.Text = "Player";
+            this.menuShowInfoBox.Name = "menuShowInfoBox";
+            this.menuShowInfoBox.Size = new System.Drawing.Size(39, 20);
+            this.menuShowInfoBox.Text = "Info";
+            this.menuShowInfoBox.Click += new System.EventHandler(this.menuShowInfoBox_Click);
             // 
             // updateTimer
             // 
@@ -82,17 +80,10 @@
             // drawPanel
             // 
             this.drawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.drawPanel.Location = new System.Drawing.Point(0, 25);
+            this.drawPanel.Location = new System.Drawing.Point(0, 24);
             this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(608, 450);
+            this.drawPanel.Size = new System.Drawing.Size(608, 451);
             this.drawPanel.TabIndex = 2;
-            // 
-            // menuShowInfoBox
-            // 
-            this.menuShowInfoBox.Name = "menuShowInfoBox";
-            this.menuShowInfoBox.Size = new System.Drawing.Size(39, 21);
-            this.menuShowInfoBox.Text = "Info";
-            this.menuShowInfoBox.Click += new System.EventHandler(this.menuShowInfoBox_Click);
             // 
             // MainForm
             // 
@@ -123,7 +114,6 @@
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem menuDropdownStart;
         private System.Windows.Forms.ToolStripMenuItem menuPauseResume;
-        private System.Windows.Forms.ToolStripTextBox menuPlayerName;
         private System.Windows.Forms.Timer updateTimer;
         private System.Windows.Forms.Panel drawPanel;
         private System.Windows.Forms.ToolStripMenuItem menuShowInfoBox;
