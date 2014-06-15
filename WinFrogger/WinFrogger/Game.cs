@@ -129,6 +129,15 @@ namespace WinFrogger
         public void HandleInput(System.Windows.Forms.Keys key)
         {
             if (gameState != GameState.Running) return;
+
+            // Frosch wiederbeleben
+            if (frog.Status == FrogStatus.Death)
+            {
+                this.ResetFrog();
+                return;
+            }
+
+
             if (frog.Status == FrogStatus.Jump) return;
 
             switch (key)
@@ -166,9 +175,8 @@ namespace WinFrogger
             if (gameState != GameState.Running) return;
 
             // Frosch aktualisieren
-            this.CheckFrogCollision();
+            if(frog.Status != FrogStatus.Death) this.CheckFrogCollision();
             this.MoveFrog();
-            if (frog.Status == FrogStatus.Death) this.ResetFrog();
 
             // Alle Autos aktualisieren
             for (int i = 0; i < cars.Count; i++)
