@@ -15,19 +15,23 @@ namespace WinFrogger
         // Variabeln
         Game game;
         Thread drawThread;
-        volatile bool stopThread = false;
+        bool keyPressed;
+        volatile bool stopThread;
 
         public MainForm()
         {
             InitializeComponent();
 
             game = new Game();
+
+            keyPressed = false;
+            stopThread = false;
         }
 
         private void Draw()
         {
             BufferedGraphicsContext context = BufferedGraphicsManager.Current;
-            BufferedGraphics myBuffer =  context.Allocate(drawPanel.CreateGraphics(), drawPanel.Bounds);
+            BufferedGraphics myBuffer = context.Allocate(drawPanel.CreateGraphics(), drawPanel.Bounds);
             
             while (!stopThread)
             {
@@ -102,7 +106,16 @@ namespace WinFrogger
 
         private void MainForm_KeyDown(object sender, KeyEventArgs e)
         {
-            game.HandleInput(e.KeyData);
+            if (!keyPressed)
+            {
+                game.HandleInput(e.KeyData);
+                keyPressed = true;
+            }
+        }
+
+        private void MainForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            keyPressed = false;
         }
 
         private void updateTimer_Tick(object sender, EventArgs e)

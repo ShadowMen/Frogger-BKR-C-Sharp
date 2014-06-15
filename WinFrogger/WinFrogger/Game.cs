@@ -210,9 +210,6 @@ namespace WinFrogger
 
         private void CheckFrogCollision()
         {
-            // Springt der Frosch soll keine weiter Kollission-Überprüfung vorgenommen werden.
-            if (frog.Status == FrogStatus.Jump) return;
-
             // Überprüfe Kollission mit Auto
             for (int i = 0; i < cars.Count; i++)
             {
@@ -225,6 +222,9 @@ namespace WinFrogger
                     return;
                 }
             }
+
+            // Springt der Frosch soll keine weiteren Kollission-Überprüfungen vorgenommen werden.
+            if (frog.Status == FrogStatus.Jump) return;            
 
             // Überprüfe Kollission mit Baumstamm
             for (int i = 0; i < trunks.Count; i++)
