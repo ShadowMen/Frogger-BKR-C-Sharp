@@ -94,27 +94,27 @@ namespace WinFrogger
             // Alle Autos löschen
             cars.Clear();
             // Neue Autos erstellen
-            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 224, 4, 32, 32, false, true));
-            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32 - i * rnd.Next(128, 256), 256, 4, 32, 32, false));
-            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 288, 4, 32, 32, false, true));
-            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32 - i * rnd.Next(128, 256), 320, 4, 32, 32, false));
-            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 352, 4, 32, 32, false, true));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 - i * rnd.Next(128, 256), 224, 4, 32, 32, false, true));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32 + i * rnd.Next(128, 256), 256, 4, 32, 32, false));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 - i * rnd.Next(128, 256), 288, 4, 32, 32, false, true));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Right, -32 + i * rnd.Next(128, 256), 320, 4, 32, 32, false));
+            for (int i = 0; i < 3; i++) cars.Add(new Car(Image.FromFile("data/textures/cars.png"), Direction.Left, 608 - i * rnd.Next(128, 256), 352, 4, 32, 32, false, true));
             // Autos zur Zeichenliste hinzufügen
             for (int i = 0; i < cars.Count; i++) drawlist.Add(cars[i]);
 
             // Alle Schildkröten löschen
             turtles.Clear();
             // Neue Schildkröten erstellen
-            for (int i = 0; i < 3; i++) turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Right, -32 - i * rnd.Next(128, 256), 64, 4, true, rnd.Next(120, 1200), true));
-            for (int i = 0; i < 3; i++) turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Right, -32 - i * rnd.Next(128, 256), 128, 4, true, rnd.Next(120, 1200), true));
+            for (int i = 0; i < 3; i++) turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Right, -32 + i * rnd.Next(128, 256), 64, 4, true, rnd.Next(120, 1200), true));
+            for (int i = 0; i < 3; i++) turtles.Add(new Turtle(Image.FromFile("data/textures/turtle.png"), Direction.Right, -32 + i * rnd.Next(128, 256), 128, 4, true, rnd.Next(120, 1200), true));
             // Schildkröten zur Zeichenliste hinzufügen
             for (int i = 0; i < turtles.Count; i++) drawlist.Add(turtles[i]);
 
             // Alle Baumstämme löschen
             trunks.Clear();
             // Neue Baumstämme erstellen
-            for (int i = 0; i < 3; i++) trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 160, 4, true));
-            for (int i = 0; i < 3; i++) trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Left, 608 + i * rnd.Next(128, 256), 96, 4, true));
+            for (int i = 0; i < 3; i++) trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Left, 608 - i * rnd.Next(128, 256), 160, 4, true));
+            for (int i = 0; i < 3; i++) trunks.Add(new Trunk(Image.FromFile("data/textures/trunk.png"), Direction.Left, 608 - i * rnd.Next(128, 256), 96, 4, true));
             // Baumstämme zur Zeichenliste hinzufügen
             for (int i = 0; i < trunks.Count; i++) drawlist.Add(trunks[i]);
         }
