@@ -31,7 +31,7 @@ namespace WinFrogger
         private void Draw()
         {
             BufferedGraphicsContext context = BufferedGraphicsManager.Current;
-            BufferedGraphics myBuffer = context.Allocate(drawPanel.CreateGraphics(), drawPanel.Bounds);
+            BufferedGraphics myBuffer = context.Allocate(drawPanel.CreateGraphics(), new Rectangle(0, 0, drawPanel.Size.Width, drawPanel.Size.Height));
             
             while (!stopThread)
             {
