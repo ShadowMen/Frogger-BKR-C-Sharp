@@ -314,20 +314,20 @@ namespace WinFrogger
 
         private void CheckCars(Car car)
         {
-            if (car.Position.X <= -32 && car.ObjDirection == Direction.Left) car.Position = new Point(32 * field.FieldWidth, car.Position.Y);
-            else if (car.Position.X >= 32 * field.FieldWidth && car.ObjDirection == Direction.Right) car.Position = new Point(-32, car.Position.Y);
+            if (car.Position.X <= -car.Width && car.ObjDirection == Direction.Left) car.Position = new Point(32 * field.FieldWidth, car.Position.Y);
+            else if (car.Position.X >= 32 * field.FieldWidth && car.ObjDirection == Direction.Right) car.Position = new Point(-car.Width, car.Position.Y);
         }
 
         private void CheckTurtles(Turtle turtle)
         {
-            if (turtle.Position.X <= -32 && turtle.ObjDirection == Direction.Left) turtle.Position = new Point(32 * field.FieldWidth, turtle.Position.Y);
-            else if (turtle.Position.X >= 32 * field.FieldWidth && turtle.ObjDirection == Direction.Right) turtle.Position = new Point(-32, turtle.Position.Y);
+            if (turtle.Position.X <= -turtle.Width && turtle.ObjDirection == Direction.Left) turtle.Position = new Point(32 * field.FieldWidth, turtle.Position.Y);
+            else if (turtle.Position.X >= 32 * field.FieldWidth && turtle.ObjDirection == Direction.Right) turtle.Position = new Point(-turtle.Width, turtle.Position.Y);
         }
 
         private void CheckTrunks(Trunk trunk)
         {
-            if (trunk.Position.X <= -32 && trunk.ObjDirection == Direction.Left) trunk.Position = new Point(32 * field.FieldWidth, trunk.Position.Y);
-            else if (trunk.Position.X >= 32 * field.FieldWidth && trunk.ObjDirection == Direction.Right) trunk.Position = new Point(-32, trunk.Position.Y);
+            if (trunk.Position.X <= -trunk.Width && trunk.ObjDirection == Direction.Left) trunk.Position = new Point(32 * field.FieldWidth, trunk.Position.Y);
+            else if (trunk.Position.X >= 32 * field.FieldWidth && trunk.ObjDirection == Direction.Right) trunk.Position = new Point(-trunk.Width, trunk.Position.Y);
         }
 
         private bool CheckGoals()
