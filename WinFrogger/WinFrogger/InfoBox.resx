@@ -121,8 +121,8 @@
   <data name="logoPictureBox.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAIIAAAD6CAYAAABtcp9RAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALEgAA
-        CxIB0t1+/AAAFfFJREFUeF7tXWmzHbURvQaMMbZ52GAWP8LiBLCxH4sXwAabxKlUKpVKUsnHLGTfl0oq
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAlwSFlzAAALEQAA
+        CxEBf2RfkQAAFfFJREFUeF7tXWmzHbURvQaMMbZ52GAWP8LiBLCxH4sXwAabxKlUKpVKUsnHLGTfl0oq
         +55U9n1PqOLv5EP+1UTnztV7Go1G3S1p5urObahbtme0dh+dbrV6Zg4t3v5Gs9D/VAJLIOhPZaAg0IXQ
         WgVlA2UDBYKywT4RKCMoGNQ0qFk8MIvKCMoIygjKCMoIyoQeE26VQN5YNAvm72zT/r818tmaiTIB4AJl
         q8CwFUBIAIEFxNaAYfZAKACCrTAR2wgEu8q5f85eRlsRYvYYYWuoXro1nj3aHSAoCCLBMwWCRha3I7Ko
@@ -218,5 +218,24 @@
         O7/NGBv4i4Dt1VONbvv9KXMXxpC1AiHx0GluuQsKhEQgzC13QYGQCIQx6HmNbf4fLbUw5H49SkgAAAAA
         SUVORK5CYII=
 </value>
+  </data>
+  <data name="textBoxDescription.Text" xml:space="preserve">
+    <value>Ziel:
+Versuche in kürzester Zeit alle 5 Steine mit Fröschen zu besetzen.
+
+Steuerung:
+W - Nach vorne
+S - Nach hinten
+D - Nach rechts
+A - Nach links
+
+-----------------------------------------------------------------------
+Lizenz: GLPv3
+
+Homepage: github.com/ShadowMen/Frogger-BKR-C-Sharp
+
+Credits:
+Texturen von Nils H.
+Musik von TinyWorlds</value>
   </data>
 </root>
